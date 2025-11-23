@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Getting Server Updates (SSE Demo)</h1>
+
+<div id="result"></div>
+
+<script>
+const x = document.getElementById("result");
+
+if (typeof(EventSource) !== "undefined") {
+
+  // เชื่อมต่อไปยังไฟล์ PHP ที่ส่งข้อมูลแบบ real-time
+  var source = new EventSource("demo_sse.php");
+
+  // เมื่อได้รับ message จาก server
+  source.onmessage = function(event) {
+    x.innerHTML += event.data + "<br>";
+  };
+
+  // เมื่อเกิด error
+  source.onerror = function(err) {
+    console.log("SSE error:", err);
+  };
+
+} else {
+  x.innerHTML = "Sorry, your browser does not support server-sent events.";
+}
+</script>
+
+</body>
+</html>
